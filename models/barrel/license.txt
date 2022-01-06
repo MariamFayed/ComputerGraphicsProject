@@ -1,0 +1,11 @@
+Model Information:
+* title:	Barrel
+* source:	https://sketchfab.com/3d-models/barrel-37f5011233d7442bb9ba6243c13f9e69
+* author:	Mok23 (https://sketchfab.com/marina-petrosyan)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Barrel" (https://sketchfab.com/3d-models/barrel-37f5011233d7442bb9ba6243c13f9e69) by Mok23 (https://sketchfab.com/marina-petrosyan) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
