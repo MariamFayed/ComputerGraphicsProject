@@ -138,8 +138,8 @@ function main() {
       const gltfLoader = new GLTFLoader();
       gltfLoader.load('models/great_white_shark/scene.gltf', function ( object ) {
             var model = object.scene;
-            model.scale.set(2, 2, 2);
-            model.position.set(-1, -1.2, 103);
+            model.scale.set(2.5, 2.5, 2.5);
+            model.position.set(-1, -1.2, 105);
             model.rotation.y = -1.1;
             scene.add(model);
             requestAnimationFrame(moveShark.bind(moveShark, model));
@@ -340,7 +340,7 @@ window.setTimeout(function () {
 
   function moveShark(object) {
     object.position.x -= 0.1;
-    if (object.position.x >= -35) {  
+    if (object.position.x >= -33) {  
        requestAnimationFrame(moveShark.bind(moveShark, object));
      }
      else {
