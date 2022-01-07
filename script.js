@@ -3,15 +3,8 @@ import { OrbitControls } from 'https://threejsfundamentals.org/threejs/resources
 import { TrackballControls } from 'https://threejsfundamentals.org/threejs/resources/threejs/r122/examples/jsm/controls/TrackballControls.js';
 import { GLTFLoader } from 'https://threejsfundamentals.org/threejs/resources/threejs/r122/examples/jsm/loaders/GLTFLoader.js';
 import { Water } from 'https://threejsfundamentals.org/threejs/resources/threejs/r122/examples/jsm/objects/Water2.js';
-import { GUI } from 'https://threejsfundamentals.org/threejs/resources/threejs/r122/examples/jsm/libs/dat.gui.module.js';
 
 function main() {
-  const params = {
-    color: '#ffffff',
-    scale: 4,
-    flowX: 1,
-    flowY: 1
-  };
 
 
   let water;
@@ -20,9 +13,10 @@ function main() {
 
   //To control the ship movement speed
   var controls1 = new function () {
-    this.rotationSpeed = 0.02;
+    this.rotationSpeed = 0.04;
 
   };
+
 
 
   //The canvas that we will render on
@@ -56,16 +50,16 @@ function main() {
    loadIsland();
    loadWhale();
    loadBarrel(-45,2,100);
-   loadBarrel(-48,2,120);
+   //loadBarrel(-48,2,120);
    loadBarrel(-10,2,120);
    scene.add(water); 
    scene.add(skyBox);
  }, 0);
 
 
+
   //enable shadowmap
   renderer.shadowMap.enabled = true;
-
 
 
   // create a camera
@@ -77,20 +71,17 @@ function main() {
   camera.position.z = 170;  //was 120
   camera.lookAt(scene.position);
 
-  //add the intro music
-
-  // var audioListener = new THREE.AudioListener();
-  // camera.add(audioListener);
-  // var sound = new THREE.Audio(audioListener);
-  // var audioLoader = new THREE.AudioLoader();
-  // audioLoader.load('sounds/intro.mp3', function (buffer) {
-  //   sound.setBuffer(buffer);
-  //   sound.setLoop(false);
-  //   sound.setVolume(1.5);
-  //   sound.play();
-  // });
-
-
+ // Load Ocean's background track
+ var audioListener = new THREE.AudioListener();
+ camera.add(audioListener);
+ var sound = new THREE.Audio(audioListener);
+ var audioLoader = new THREE.AudioLoader();
+ audioLoader.load('sounds/ocean-wave-2.mp3', function (buffer) {
+   sound.setBuffer(buffer);
+   sound.setLoop(true);
+   sound.setVolume(1.5);
+   sound.play();
+ });
 
 
   var trackballControls = initTrackballControls(camera, renderer);
@@ -141,34 +132,6 @@ function main() {
   }
 
 
-  const gui = new GUI();
-
-  gui.addColor(params, 'color').onChange(function (value) {
-
-    water.material.uniforms['color'].value.set(value);
-
-  });
-  gui.add(params, 'scale', 1, 10).onChange(function (value) {
-
-    water.material.uniforms['config'].value.w = value;
-
-  });
-  gui.add(params, 'flowX', - 1, 1).step(0.01).onChange(function (value) {
-
-    water.material.uniforms['flowDirection'].value.x = value;
-    water.material.uniforms['flowDirection'].value.normalize();
-
-  });
-  gui.add(params, 'flowY', - 1, 1).step(0.01).onChange(function (value) {
-
-    water.material.uniforms['flowDirection'].value.y = value;
-    water.material.uniforms['flowDirection'].value.normalize();
-
-  });
-  gui.add(controls1, 'rotationSpeed', 0, 0.5);
-  gui.open();
-
-
   function loadShark() {
 
     {
@@ -176,7 +139,8 @@ function main() {
       gltfLoader.load('models/great_white_shark/scene.gltf', function ( object ) {
             var model = object.scene;
             model.scale.set(2, 2, 2);
-            model.position.set(-60, -1.2, 40);
+            model.position.set(-1, -1.2, 103);
+            model.rotation.y = -1.1;
             scene.add(model);
             requestAnimationFrame(moveShark.bind(moveShark, model));
         
@@ -196,9 +160,9 @@ function main() {
       gltfLoader.load('models/whale_shark/scene.gltf', function ( object ) {
             var model = object.scene;
             model.scale.set(0.1, 0.1, 0.1);
-            model.position.set(-60, -1, -40);
+            model.position.set(-60, -1, -45);
             scene.add(model);
-            requestAnimationFrame(moveShark.bind(moveShark, model));
+            requestAnimationFrame(moveWhale.bind(moveWhale, model));
         
         }, undefined, function ( e ) {
         
@@ -214,11 +178,10 @@ function main() {
       const gltfLoader = new GLTFLoader();
       gltfLoader.load('models/boat/scene.gltf', function ( object ) {
             var model = object.scene;
-            model.scale.set(0.02, 0.02, 0.02);
-            model.position.set(-15, 0.5, 150);
-            model.rotation.y = 5;
+            model.scale.set(0.02, 0.02,-0.02);
+            model.position.set(-55, 0.5, 130);
+            model.rotation.y = 4.5;
             scene.add(model);
-            model.position.x -= controls1.rotationSpeed;
             requestAnimationFrame(moveShip.bind(moveShip, model));
         
         }, undefined, function ( e ) {
@@ -265,75 +228,48 @@ function main() {
   //the morning skybox
   var cubeGeometry = new THREE.CubeGeometry(1200, 1000, 1200);
   var cubeMaterial = [
-    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("models/textures/px.JPG"), side: THREE.BackSide }),
-    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("models/textures/nx.JPG"), side: THREE.BackSide }),
-    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("models/textures/py.JPG"), side: THREE.BackSide }),
-    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("models/textures/ny.JPG"), side: THREE.BackSide }),
-    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("models/textures/pz.JPG"), side: THREE.BackSide }),
-    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("models/textures/nz.JPG"), side: THREE.BackSide })
+    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("models/textures/morning_ft.png"), side: THREE.BackSide }),
+    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("models/textures/morning_bk.png"), side: THREE.BackSide }),
+    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("models/textures/morning_up.png"), side: THREE.BackSide }),
+    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("models/textures/morning_dn.png"), side: THREE.BackSide }),
+    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("models/textures/morning_rt.png"), side: THREE.BackSide }),
+    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("models/textures/morning_lt.png"), side: THREE.BackSide })
   ];
   var skyBox = new THREE.Mesh(cubeGeometry, cubeMaterial);
-
-  //Lightening bolt
-  var planeGeometry = new THREE.PlaneGeometry(190, 190);
-  var planeMaterial = [
-    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/bolt.png"), side: THREE.DoubleSide, alphaTest: 0.4 }),
-    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/bolt.png"), side: THREE.DoubleSide, alphaTest: 0.4 })
-  ];
-  var bolt = new THREE.Mesh(planeGeometry, planeMaterial);
-  bolt.position.set(-150, 90, -350);
-  var cloneBolt = bolt.clone();
-  cloneBolt.position.x = 180;
-
-
-  //bolts added to scene 
-  window.setTimeout(function () {
-    scene.add(bolt);
-    scene.add(cloneBolt);
-    var audioListener = new THREE.AudioListener();
-    camera.add(audioListener);
-    var sound = new THREE.Audio(audioListener);
-    var audioLoader = new THREE.AudioLoader();
-    audioLoader.load('sounds/bolt.mp3', function (buffer) {
-      sound.setBuffer(buffer);
-      sound.setLoop(false);
-      sound.setVolume(1.5);
-      sound.play();
-    });
-  }, 45000);
-
-  //bolts removed from scene
-  window.setTimeout(function () {
-    scene.remove(bolt);
-    scene.remove(cloneBolt);
-    planeGeometry.dispose();
-  }, 47000);
-
 
 
   //Change the scene to night 
   window.setTimeout(function () {
     scene.remove(skyBox); //remove morning skybox
-    scene.remove(cube);
 
     cubeGeometry.dispose();
-    //var nightCube = new THREE.CubeGeometry(1800, 1200, 1300);
     var nightCube = new THREE.CubeGeometry(1200, 1000, 1200);
     ; var nightCubeMaterial = [
-      new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("models/textures/back.png"), side: THREE.BackSide }),
-      new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("models/textures/back.png"), side: THREE.BackSide }),
-      new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("models/textures/top.png"), side: THREE.BackSide }),
-      new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("models/textures/bottom.png"), side: THREE.BackSide }),
-      new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("models/textures/top.png"), side: THREE.BackSide }),
-      new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("models/textures/left.png"), side: THREE.BackSide })
+      new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("models/textures/nightsky_ft.png"), side: THREE.BackSide }),
+      new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("models/textures/nightsky_bk.png"), side: THREE.BackSide }),
+      new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("models/textures/nightsky_up.png"), side: THREE.BackSide }),
+      new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("models/textures/nightsky_dn.png"), side: THREE.BackSide }),
+      new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("models/textures/nightsky_rt.png"), side: THREE.BackSide }),
+      new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("models/textures/nightsky_lf.png"), side: THREE.BackSide })
     ];
     var nightSkyBox = new THREE.Mesh(nightCube, nightCubeMaterial);
     scene.add(nightSkyBox);
-  }, 44000);
+    
+    var audioListener = new THREE.AudioListener();
+    camera.add(audioListener);
+    var sound = new THREE.Audio(audioListener);
+    var audioLoader = new THREE.AudioLoader();
+    audioLoader.load('sounds/wave.mp3', function (buffer) {
+      sound.setBuffer(buffer);
+      sound.setLoop(true);
+      sound.setVolume(3);
+      sound.play();
+    });
+  }, 10000);
   
 
   function moveShip(object) {
-    object.position.x -= controls1.rotationSpeed;
+    object.position.x += controls1.rotationSpeed;
     requestAnimationFrame(moveShip.bind(moveShip, object));
   }
 
@@ -377,12 +313,12 @@ function main() {
 window.setTimeout(function () {
   scene.add(snow);
   loadShark();
-}, 43500);
+}, 10000);
 
   controls.update();
 
 
-//add light
+//add light to objects
  {
     const skyColor = 0xB1E1FF;  
     const groundColor = 0xB97A20;  
@@ -402,17 +338,29 @@ window.setTimeout(function () {
     return needResize;
   }
 
-
   function moveShark(object) {
+    object.position.x -= 0.1;
+    if (object.position.x >= -35) {  
+       requestAnimationFrame(moveShark.bind(moveShark, object));
+     }
+     else {
+      object.position.x -= 0.2;
+      object.position.y -= 0.05;
+      requestAnimationFrame(moveShark.bind(moveShark, object));
+    }
+
+  }
+
+  function moveWhale(object) {
     if (object.position.x >= -20) {  
-      object.position.x += 0.01;
+      object.position.x += 0.05;
 
       object.position.z += 0.2;
-      requestAnimationFrame(moveShark.bind(moveShark, object));
+      requestAnimationFrame(moveWhale.bind(moveWhale, object));
     }
     else {
       object.position.z += 0.2;
-      requestAnimationFrame(moveShark.bind(moveShark, object));
+      requestAnimationFrame(moveWhale.bind(moveWhale, object));
     }
 
   }
