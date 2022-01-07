@@ -228,12 +228,13 @@ function main() {
   //the morning skybox
   var cubeGeometry = new THREE.CubeGeometry(1200, 1000, 1200);
   var cubeMaterial = [
-    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("models/textures/morning_ft.png"), side: THREE.BackSide }),
-    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("models/textures/morning_bk.png"), side: THREE.BackSide }),
-    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("models/textures/morning_up.png"), side: THREE.BackSide }),
-    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("models/textures/morning_dn.png"), side: THREE.BackSide }),
-    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("models/textures/morning_rt.png"), side: THREE.BackSide }),
-    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("models/textures/morning_lt.png"), side: THREE.BackSide })
+    
+    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/morning/morning_ft.png"), side: THREE.BackSide }),
+    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/morning/morning_bk.png"), side: THREE.BackSide }),
+    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/morning/morning_up.png"), side: THREE.BackSide }),
+    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/morning/morning_dn.png"), side: THREE.BackSide }),
+    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/morning/morning_rt.png"), side: THREE.BackSide }),
+    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/morning/morning_lt.png"), side: THREE.BackSide })
   ];
   var skyBox = new THREE.Mesh(cubeGeometry, cubeMaterial);
 
@@ -245,12 +246,12 @@ function main() {
     cubeGeometry.dispose();
     var nightCube = new THREE.CubeGeometry(1200, 1000, 1200);
     ; var nightCubeMaterial = [
-      new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("models/textures/nightsky_ft.png"), side: THREE.BackSide }),
-      new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("models/textures/nightsky_bk.png"), side: THREE.BackSide }),
-      new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("models/textures/nightsky_up.png"), side: THREE.BackSide }),
-      new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("models/textures/nightsky_dn.png"), side: THREE.BackSide }),
-      new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("models/textures/nightsky_rt.png"), side: THREE.BackSide }),
-      new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("models/textures/nightsky_lf.png"), side: THREE.BackSide })
+      new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/night/nightsky_ft.png"), side: THREE.BackSide }),
+      new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/night/nightsky_bk.png"), side: THREE.BackSide }),
+      new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/night/nightsky_up.png"), side: THREE.BackSide }),
+      new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/night/nightsky_dn.png"), side: THREE.BackSide }),
+      new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/night/nightsky_rt.png"), side: THREE.BackSide }),
+      new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/night/nightsky_lf.png"), side: THREE.BackSide })
     ];
     var nightSkyBox = new THREE.Mesh(nightCube, nightCubeMaterial);
     scene.add(nightSkyBox);
