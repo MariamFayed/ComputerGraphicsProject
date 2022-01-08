@@ -4,7 +4,8 @@
   "description": "Our Computer Graphics Project is about a Snow Island in the Middle of the Sea.",
   "main": "script.js",
   "scripts": {
-    "test": "npm test"
+    "test": "npm test",
+    "start": "script.js"
   },
   "repository": {
     "type": "git",
