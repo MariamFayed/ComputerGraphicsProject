@@ -1,0 +1,25 @@
+{
+  "name": "graphicsproject",
+  "version": "1.0.0",
+  "description": "Our Computer Graphics Project is about a Snow Island in the Middle of the Sea.",
+  "main": "script.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MariamFayed/graphicsProject.git"
+  },
+  "keywords": [
+    "snow",
+    "sea",
+    "island",
+    "penguin"
+  ],
+  "author": "Mariam Fayed, Fatema Hassan & Muhammed Tamer",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MariamFayed/graphicsProject/issues"
+  },
+  "homepage": "https://github.com/MariamFayed/graphicsProject#readme"
+}
