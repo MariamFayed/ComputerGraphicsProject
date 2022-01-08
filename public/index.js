@@ -3,8 +3,16 @@ import { OrbitControls } from 'https://threejsfundamentals.org/threejs/resources
 import { TrackballControls } from 'https://threejsfundamentals.org/threejs/resources/threejs/r122/examples/jsm/controls/TrackballControls.js';
 import { GLTFLoader } from 'https://threejsfundamentals.org/threejs/resources/threejs/r122/examples/jsm/loaders/GLTFLoader.js';
 import { Water } from 'https://threejsfundamentals.org/threejs/resources/threejs/r122/examples/jsm/objects/Water2.js';
+import { GUI } from 'https://threejsfundamentals.org/threejs/resources/threejs/r122/examples/jsm/libs/dat.gui.module.js';
+
 
 function main() {
+  const params = {
+    color: '#ffffff',
+    scale: 4,
+    flowX: 1,
+    flowY: 1
+  };
 
 
   let water;
@@ -92,7 +100,7 @@ function main() {
 
 
 
-
+// Ambient Light
   var light = new THREE.DirectionalLight(0x404040, 0.8);
   scene.add(light);
   var ambient_light = new THREE.AmbientLight(0x404080, 1);
@@ -131,7 +139,32 @@ function main() {
     water.rotation.x = - Math.PI / 2;
   }
 
+  const gui = new GUI();
 
+  gui.addColor(params, 'color').onChange(function (value) {
+
+    water.material.uniforms['color'].value.set(value);
+
+  });
+  gui.add(params, 'scale', 1, 10).onChange(function (value) {
+
+    water.material.uniforms['config'].value.w = value;
+
+  });
+  gui.add(params, 'flowX', - 1, 1).step(0.01).onChange(function (value) {
+
+    water.material.uniforms['flowDirection'].value.x = value;
+    water.material.uniforms['flowDirection'].value.normalize();
+
+  });
+  gui.add(params, 'flowY', - 1, 1).step(0.01).onChange(function (value) {
+
+    water.material.uniforms['flowDirection'].value.y = value;
+    water.material.uniforms['flowDirection'].value.normalize();
+
+  });
+  gui.add(controls1, 'rotationSpeed', 0, 0.5);
+  gui.open();
   function loadShark() {
 
     {
@@ -295,7 +328,6 @@ function main() {
 
   
   //snow
-
   var pointGeometry = new THREE.Geometry();
   for (var i = 0; i < 1000000; i++) {
     var point = new THREE.Vector3();
