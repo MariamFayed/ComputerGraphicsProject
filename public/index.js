@@ -41,7 +41,7 @@ function main() {
   // create a scene, that will hold all our elements
   const scene = new THREE.Scene();
 
-
+  // Keyboard Controllers
   document.addEventListener('keydown', function (event) {
     if (event.key == "Left") {
       console.log('Left was pressed');
@@ -51,47 +51,46 @@ function main() {
     }
   });
 
-  
-
- window.setTimeout(function () {
-   loadShip();
-   loadIsland();
-   loadWhale();
-   loadBarrel(-45,2,100);
-   //loadBarrel(-48,2,120);
-   loadBarrel(-10,2,120);
-   scene.add(water); 
-   scene.add(skyBox);
- }, 0);
-
+  // Load the Morning Scenes Objects
+  window.setTimeout(function () {
+    loadShip();
+    loadIsland();
+    loadWhale();
+    loadBarrel(-45, 2, 100);
+    //loadBarrel(-48,2,120);
+    loadBarrel(-10, 2, 120);
+    scene.add(water);
+    scene.add(skyBox);
+  }, 0);
 
 
-  //enable shadowmap
+
+  // Enabling Shadowmapping
   renderer.shadowMap.enabled = true;
 
 
-  // create a camera
+  // Create the Camera
   camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
 
-  //set camera position
+  // Set the Camera's Position
   camera.position.x = -30;
   camera.position.y = 5;
   camera.position.z = 170;  //was 120
   camera.lookAt(scene.position);
 
- // Load Ocean's background track
- var audioListener = new THREE.AudioListener();
- camera.add(audioListener);
- var sound = new THREE.Audio(audioListener);
- var audioLoader = new THREE.AudioLoader();
- audioLoader.load('sounds/ocean-wave-2.mp3', function (buffer) {
-   sound.setBuffer(buffer);
-   sound.setLoop(true);
-   sound.setVolume(1.5);
-   sound.play();
- });
+  // Load Ocean's background track
+  var audioListener = new THREE.AudioListener();
+  camera.add(audioListener);
+  var sound = new THREE.Audio(audioListener);
+  var audioLoader = new THREE.AudioLoader();
+  audioLoader.load('sounds/ocean-wave-2.mp3', function (buffer) {
+    sound.setBuffer(buffer);
+    sound.setLoop(true);
+    sound.setVolume(1.5);
+    sound.play();
+  });
 
-
+  // Camera Controlling 
   var trackballControls = initTrackballControls(camera, renderer);
   var clock = new THREE.Clock();
 
@@ -100,20 +99,20 @@ function main() {
 
 
 
-// Ambient Light
+  // Ambient Light
   var light = new THREE.DirectionalLight(0x404040, 0.8);
   scene.add(light);
   var ambient_light = new THREE.AmbientLight(0x404080, 1);
   scene.add(ambient_light);
 
-  // add spotlight for the shadows
+  // Adding Spotlights for the Shadows
   var spotLight = new THREE.SpotLight(0xffffff);
   spotLight.position.set(0, 0, 0);
   spotLight.castShadow = true;
   scene.add(spotLight);
 
 
-  // Water
+  // Water Configuration using Water Library
   {
     var waterGeometry = new THREE.PlaneBufferGeometry(1000, 1000, 10, 10);
 
@@ -139,6 +138,8 @@ function main() {
     water.rotation.x = - Math.PI / 2;
   }
 
+
+  // Scene Controller GUI Box
   const gui = new GUI();
 
   gui.addColor(params, 'color').onChange(function (value) {
@@ -169,99 +170,117 @@ function main() {
 
     {
       const gltfLoader = new GLTFLoader();
-      gltfLoader.load('models/great_white_shark/scene.gltf', function ( object ) {
-            var model = object.scene;
-            model.scale.set(2.5, 2.5, 2.5);
-            model.position.set(-1, -1.2, 105);
-            model.rotation.y = -1.1;
-            scene.add(model);
-            requestAnimationFrame(moveShark.bind(moveShark, model));
-        
-        }, undefined, function ( e ) {
-        
-          console.error( e );
-        
-        } );
-      }
+      gltfLoader.load('models/great_white_shark/scene.gltf', function (object) {
+        var model = object.scene;
+        model.scale.set(2.5, 2.5, 2.5);
+        model.position.set(-1, -1.2, 105);
+        model.rotation.y = -1.1;
+        scene.add(model);
+        requestAnimationFrame(moveShark.bind(moveShark, model));
+
+      }, undefined, function (e) {
+
+        console.error(e);
+
+      });
     }
+  }
 
 
   function loadWhale() {
 
     {
       const gltfLoader = new GLTFLoader();
-      gltfLoader.load('models/whale_shark/scene.gltf', function ( object ) {
-            var model = object.scene;
-            model.scale.set(0.1, 0.1, 0.1);
-            model.position.set(-60, -1, -45);
-            scene.add(model);
-            requestAnimationFrame(moveWhale.bind(moveWhale, model));
-        
-        }, undefined, function ( e ) {
-        
-          console.error( e );
-        
-        } );
-      }
+      gltfLoader.load('models/whale_shark/scene.gltf', function (object) {
+        var model = object.scene;
+        model.scale.set(0.1, 0.1, 0.1);
+        model.position.set(-60, -1, -45);
+        scene.add(model);
+        requestAnimationFrame(moveWhale.bind(moveWhale, model));
+
+      }, undefined, function (e) {
+
+        console.error(e);
+
+      });
+    }
   }
 
   function loadShip() {
 
     {
       const gltfLoader = new GLTFLoader();
-      gltfLoader.load('models/boat/scene.gltf', function ( object ) {
-            var model = object.scene;
-            model.scale.set(0.02, 0.02,-0.02);
-            model.position.set(-55, 0.5, 130);
-            model.rotation.y = 4.5;
-            scene.add(model);
-            requestAnimationFrame(moveShip.bind(moveShip, model));
-        
-        }, undefined, function ( e ) {
-        
-          console.error( e );
-        
-        } );
-      }
+      gltfLoader.load('models/boat/scene.gltf', function (object) {
+        var model = object.scene;
+        model.scale.set(0.02, 0.02, -0.02);
+        model.position.set(-55, 0.5, 130);
+        model.rotation.y = 4.5;
+        scene.add(model);
+        requestAnimationFrame(moveShip.bind(moveShip, model));
+
+      }, undefined, function (e) {
+
+        console.error(e);
+
+      });
     }
+  }
 
   function loadIsland() {
     {
 
-    const gltfLoader = new GLTFLoader();
-    gltfLoader.load('models/lonelypenguin/scene.gltf', function ( object ) {
-          var model = object.scene;
-          model.scale.set(1.5,1.5,1.5);
-          model.position.set(0 ,15, -400);
-          model.rotation.y = 5;
-          scene.add(model);
-      
-     }, undefined, function ( e ) {
-      
-       console.error( e );
-      
-     } );
-     const gltfLoader2 = new GLTFLoader();
-     gltfLoader2.load('models/penguin/scene.gltf', function ( object ) {
-           var model = object.scene;
-           model.scale.set(0.3,0.3,0.3);
-           model.position.set(250 ,-70, -150);
-           model.rotation.y = 5.5;
-           scene.add(model);
-       
-      }, undefined, function ( e ) {
-       
-        console.error( e );
-       
-      } );
+      const gltfLoader = new GLTFLoader();
+      gltfLoader.load('models/lonelypenguin/scene.gltf', function (object) {
+        var model = object.scene;
+        model.scale.set(1.5, 1.5, 1.5);
+        model.position.set(0, 15, -400);
+        model.rotation.y = 5;
+        scene.add(model);
+
+      }, undefined, function (e) {
+
+        console.error(e);
+
+      });
+      const gltfLoader2 = new GLTFLoader();
+      gltfLoader2.load('models/penguin/scene.gltf', function (object) {
+        var model = object.scene;
+        model.scale.set(0.3, 0.3, 0.3);
+        model.position.set(250, -70, -150);
+        model.rotation.y = 5.5;
+        scene.add(model);
+
+      }, undefined, function (e) {
+
+        console.error(e);
+
+      });
+    }
+  }
+  function loadBarrel(x, y, z) {
+    {
+
+      const gltfLoader = new GLTFLoader();
+      gltfLoader.load('models/barrel/scene.gltf', function (object) {
+        var model = object.scene;
+        model.scale.set(1.8, 1.8, 1.8);
+        model.position.set(x, y, z);
+        scene.add(model);
+        requestAnimationFrame(moveBarrel.bind(moveBarrel, model));
+
+      }, undefined, function (e) {
+
+        console.error(e);
+
+      });
     }
   }
 
 
-  //the morning skybox
+  // Morning Skybox Cube
   var cubeGeometry = new THREE.CubeGeometry(1200, 1000, 1200);
   var cubeMaterial = [
-    
+
     new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/morning/morning_ft.png"), side: THREE.BackSide }),
     new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/morning/morning_bk.png"), side: THREE.BackSide }),
     new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/morning/morning_up.png"), side: THREE.BackSide }),
@@ -272,13 +291,15 @@ function main() {
   var skyBox = new THREE.Mesh(cubeGeometry, cubeMaterial);
 
 
-  //Change the scene to night 
+  // Change the Scene Mode to Night
   window.setTimeout(function () {
-    scene.remove(skyBox); //remove morning skybox
+    // Remove the morning theme
+    scene.remove(skyBox);
 
     cubeGeometry.dispose();
+    // Night Skybox Cube
     var nightCube = new THREE.CubeGeometry(1200, 1000, 1200);
-    ; var nightCubeMaterial = [
+    var nightCubeMaterial = [
       new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/night/nightsky_ft.png"), side: THREE.BackSide }),
       new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/night/nightsky_bk.png"), side: THREE.BackSide }),
       new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/night/nightsky_up.png"), side: THREE.BackSide }),
@@ -288,7 +309,7 @@ function main() {
     ];
     var nightSkyBox = new THREE.Mesh(nightCube, nightCubeMaterial);
     scene.add(nightSkyBox);
-    
+
     var audioListener = new THREE.AudioListener();
     camera.add(audioListener);
     var sound = new THREE.Audio(audioListener);
@@ -300,34 +321,8 @@ function main() {
       sound.play();
     });
   }, 10000);
-  
 
-  function moveShip(object) {
-    object.position.x += controls1.rotationSpeed;
-    requestAnimationFrame(moveShip.bind(moveShip, object));
-  }
-
-  function loadBarrel(x,y,z) {
-    {
-
-    const gltfLoader = new GLTFLoader();
-    gltfLoader.load('models/barrel/scene.gltf', function ( object ) {
-          var model = object.scene;
-          model.scale.set(1.8,1.8,1.8);
-          model.position.set(x, y, z);
-          scene.add(model);
-          requestAnimationFrame(moveBarrel.bind(moveBarrel, model));
-      
-     }, undefined, function ( e ) {
-      
-       console.error( e );
-      
-     } );
-    }
-  }
-
-  
-  //snow
+  // Snow Point Geometry
   var pointGeometry = new THREE.Geometry();
   for (var i = 0; i < 1000000; i++) {
     var point = new THREE.Vector3();
@@ -343,18 +338,18 @@ function main() {
   var snow = new THREE.Points(pointGeometry, pointMaterial);
   snow.scale.y = 8.0;
 
-window.setTimeout(function () {
-  scene.add(snow);
-  loadShark();
-}, 10000);
+  window.setTimeout(function () {
+    scene.add(snow);
+    loadShark();
+  }, 10000);
 
   controls.update();
 
 
-//add light to objects
- {
-    const skyColor = 0xB1E1FF;  
-    const groundColor = 0xB97A20;  
+  // Add Lights to Objects
+  {
+    const skyColor = 0xB1E1FF;
+    const groundColor = 0xB97A20;
     const intensity = 1;
     const light = new THREE.HemisphereLight(skyColor, groundColor, intensity);
     scene.add(light);
@@ -373,10 +368,10 @@ window.setTimeout(function () {
 
   function moveShark(object) {
     object.position.x -= 0.1;
-    if (object.position.x >= -33) {  
-       requestAnimationFrame(moveShark.bind(moveShark, object));
-     }
-     else {
+    if (object.position.x >= -33) {
+      requestAnimationFrame(moveShark.bind(moveShark, object));
+    }
+    else {
       object.position.x -= 0.2;
       object.position.y -= 0.05;
       requestAnimationFrame(moveShark.bind(moveShark, object));
@@ -385,7 +380,7 @@ window.setTimeout(function () {
   }
 
   function moveWhale(object) {
-    if (object.position.x >= -20) {  
+    if (object.position.x >= -20) {
       object.position.x += 0.05;
 
       object.position.z += 0.2;
@@ -398,14 +393,18 @@ window.setTimeout(function () {
 
   }
 
-
   function moveBarrel(object) {
     object.position.y = Math.cos(x) - 1;
     x += 0.02;
     requestAnimationFrame(moveBarrel.bind(moveBarrel, object));
   }
 
+  function moveShip(object) {
+    object.position.x += controls1.rotationSpeed;
+    requestAnimationFrame(moveShip.bind(moveShip, object));
+  }
 
+  // Rendering Scene function
   function render() {
     trackballControls.update(clock.getDelta());
 
@@ -420,13 +419,12 @@ window.setTimeout(function () {
     }
 
     renderer.render(scene, camera);
-
-
     requestAnimationFrame(render);
   }
 
   requestAnimationFrame(render);
 
+  // Window Resizing Function
   function onResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
@@ -434,6 +432,7 @@ window.setTimeout(function () {
 
   }
 
+  // Camera Controlling Function
   function initTrackballControls(camera, renderer) {
     var trackballControls = new TrackballControls(camera, renderer.domElement);
     trackballControls.rotateSpeed = 1.0;
