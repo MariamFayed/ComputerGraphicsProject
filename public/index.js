@@ -397,6 +397,8 @@ function main() {
   bolt.position.set(-150, 90, -350);
   var cloneBolt = bolt.clone();
   cloneBolt.position.x = 180;
+  cloneBolt.position.y = 111;
+
 
   //bolts added to scene
   window.setTimeout(function () {
