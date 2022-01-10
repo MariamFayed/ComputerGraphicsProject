@@ -1,10 +1,11 @@
-import * as THREE from "https://threejsfundamentals.org/threejs/resources/threejs/r122/build/three.module.js";
-import { OrbitControls } from "https://threejsfundamentals.org/threejs/resources/threejs/r122/examples/jsm/controls/OrbitControls.js";
-import { TrackballControls } from "https://threejsfundamentals.org/threejs/resources/threejs/r122/examples/jsm/controls/TrackballControls.js";
-import { GLTFLoader } from "https://threejsfundamentals.org/threejs/resources/threejs/r122/examples/jsm/loaders/GLTFLoader.js";
-import { Water } from "https://threejsfundamentals.org/threejs/resources/threejs/r122/examples/jsm/objects/Water2.js";
-import { GUI } from "https://threejsfundamentals.org/threejs/resources/threejs/r122/examples/jsm/libs/dat.gui.module.js";
-import { firefunc } from "./FireShader.js";
+import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threejs/r122/build/three.module.js';
+import { OrbitControls } from 'https://threejsfundamentals.org/threejs/resources/threejs/r122/examples/jsm/controls/OrbitControls.js';
+import { TrackballControls } from 'https://threejsfundamentals.org/threejs/resources/threejs/r122/examples/jsm/controls/TrackballControls.js';
+import { GLTFLoader } from 'https://threejsfundamentals.org/threejs/resources/threejs/r122/examples/jsm/loaders/GLTFLoader.js';
+import { Water } from 'https://threejsfundamentals.org/threejs/resources/threejs/r122/examples/jsm/objects/Water2.js';
+import { GUI } from 'https://threejsfundamentals.org/threejs/resources/threejs/r122/examples/jsm/libs/dat.gui.module.js';
+import  { firefunc }  from './FireShader.js';
+
 
 function main() {
   const params = {
@@ -269,32 +270,31 @@ function main() {
       );
     }
   }
-  var textureLoader = new THREE.TextureLoader();
-  var tex = textureLoader.load("textures/Fire.png");
-  var fire = new firefunc(tex);
-  // fire.geometry.parameters.set(10, 10, 10);
-  fire.position.set(0, 1, 0);
-  //fire.position.x = -20.0;
+// var textureLoader = new THREE.TextureLoader();
+// var tex = textureLoader.load("textures/Fire.png");
+// var fire = new firefunc( tex );
+// fire.scale.set(1.5, 1.5,1.5);
+// fire.position.set( 0,5, 0 );
+// //fire.position.x = -20.0;
 
-  scene.add(fire);
-  console.log(typeof fire.geometry.parameters, typeof fire.scale);
+// scene.add( fire );
 
-  function loadGrass() {
-    {
-      const gltfLoader = new GLTFLoader();
-      gltfLoader.load(
-        "models/grass/scene.gltf",
-        function (object) {
-          var model = object.scene;
-          model.scale.set(6, 6, 6);
-          model.position.set(25, 6.9, 112);
-          scene.add(model);
-        },
-        undefined,
-        function (e) {
-          console.error(e);
-        }
-      );
+   function loadGrass() {
+     {
+
+       const gltfLoader = new GLTFLoader();
+       gltfLoader.load('models/grass/scene.gltf', function (object) {
+         var model = object.scene;
+         model.scale.set(6, 6, 6);
+         model.position.set(30, 6.9, 112);
+         scene.add(model);
+
+       }, undefined, function (e) {
+
+        console.error(e);
+
+       });
+
     }
   }
 
@@ -399,7 +399,8 @@ function main() {
   cloneBolt.position.x = 180;
   cloneBolt.position.y = 111;
 
-  //bolts added to scene
+
+  // Bolts are added to the Scene
   window.setTimeout(function () {
     scene.add(bolt);
     scene.add(cloneBolt);
