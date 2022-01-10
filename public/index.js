@@ -4,6 +4,7 @@ import { TrackballControls } from 'https://threejsfundamentals.org/threejs/resou
 import { GLTFLoader } from 'https://threejsfundamentals.org/threejs/resources/threejs/r122/examples/jsm/loaders/GLTFLoader.js';
 import { Water } from 'https://threejsfundamentals.org/threejs/resources/threejs/r122/examples/jsm/objects/Water2.js';
 import { GUI } from 'https://threejsfundamentals.org/threejs/resources/threejs/r122/examples/jsm/libs/dat.gui.module.js';
+import  { firefunc }  from './FireShader.js';
 
 
 function main() {
@@ -59,6 +60,7 @@ function main() {
     loadBarrel(-45, 2, 100);
     //loadBarrel(-48,2,120);
     loadBarrel(-10, 2, 120);
+    loadGrass();
     scene.add(water);
     scene.add(skyBox);
   }, 0);
@@ -275,7 +277,33 @@ function main() {
       });
     }
   }
+  var textureLoader = new THREE.TextureLoader();
+  var tex = textureLoader.load("textures/Fire.png");
+  var fire = new firefunc( tex );
+  fire.scale.set(1.5, 1.5,1.5);
+  fire.position.set( 0,1, 0 );
+  //fire.position.x = -20.0;
 
+  scene.add( fire );
+
+   function loadGrass() {
+     {
+
+       const gltfLoader = new GLTFLoader();
+       gltfLoader.load('models/grass/scene.gltf', function (object) {
+         var model = object.scene;
+         model.scale.set(6, 6, 6);
+         model.position.set(25, 6.9, 112);
+         scene.add(model);
+
+       }, undefined, function (e) {
+
+        console.error(e);
+
+       });
+
+    }
+  }
 
   // Morning Skybox Cube
   var cubeGeometry = new THREE.CubeGeometry(1200, 1000, 1200);
