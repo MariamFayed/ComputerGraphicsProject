@@ -52,7 +52,7 @@ function main() {
     loadBarrel(-45, 2, 100);
     //loadBarrel(-48,2,120);
     loadBarrel(-10, 2, 120);
-    loadGrass();
+    loadCoral();
     scene.add(water);
     scene.add(skyBox);
   }, 0);
@@ -279,14 +279,14 @@ function main() {
 
 // scene.add( fire );
 
-   function loadGrass() {
+   function loadCoral() {
      {
 
        const gltfLoader = new GLTFLoader();
        gltfLoader.load('models/grass/scene.gltf', function (object) {
          var model = object.scene;
          model.scale.set(6, 6, 6);
-         model.position.set(30, 6.9, 112);
+         model.position.set(20, -1, 130);
          scene.add(model);
 
        }, undefined, function (e) {
