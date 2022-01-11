@@ -367,16 +367,6 @@ function main() {
     bolt.position.set(-150, 90, -350);
     scene.add(nightSkyBox);
 
-    // var audioListener = new THREE.AudioListener();
-    // camera.add(audioListener);
-    // var sound = new THREE.Audio(audioListener);
-    // var audioLoader = new THREE.AudioLoader();
-    // audioLoader.load("./sounds/ocean-wave-2.mp3", function (buffer) {
-    //   sound.setBuffer(buffer);
-    //   sound.setLoop(2);
-    //   sound.setVolume(1);
-    //   sound.play();
-    // });
   }, 10000);
 
   //Lightining bolt
